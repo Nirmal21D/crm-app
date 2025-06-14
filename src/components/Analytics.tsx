@@ -156,15 +156,26 @@ const Analytics: React.FC = () => {
   };
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="xl" sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 3 } }}>
       <Box sx={{ width: '100%' }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ 
+          borderBottom: 1, 
+          borderColor: 'divider',
+          mb: { xs: 2, sm: 3 }
+        }}>
           <Tabs
             value={value}
             onChange={handleChange}
             aria-label="analytics tabs"
             variant="scrollable"
             scrollButtons="auto"
+            sx={{
+              '& .MuiTab-root': {
+                fontSize: { xs: '0.875rem', sm: '1rem' },
+                minWidth: { xs: 120, sm: 160 },
+                px: { xs: 1, sm: 2 }
+              }
+            }}
           >
             <Tab label="Product Analytics" {...a11yProps(0)} />
           </Tabs>

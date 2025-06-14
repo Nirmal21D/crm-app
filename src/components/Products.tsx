@@ -140,9 +140,16 @@ const Products: React.FC = () => {
   });
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Box sx={{ mb: 4, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 3 } }}>
+      <Box sx={{ 
+        mb: 4, 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        justifyContent: 'space-between', 
+        alignItems: { xs: 'stretch', sm: 'center' },
+        gap: { xs: 2, sm: 0 }
+      }}>
+        <Typography variant="h4" component="h1" sx={{ fontWeight: 600, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
           Products
         </Typography>
         <Button
@@ -150,7 +157,7 @@ const Products: React.FC = () => {
           color="primary"
           onClick={handleOpen}
           startIcon={<AddIcon />}
-          sx={{ borderRadius: 2 }}
+          sx={{ borderRadius: 2, width: { xs: '100%', sm: 'auto' } }}
         >
           Add New Product
         </Button>
@@ -170,7 +177,13 @@ const Products: React.FC = () => {
               </InputAdornment>
             ),
           }}
-          sx={{ bgcolor: 'background.paper', borderRadius: 1 }}
+          sx={{ 
+            bgcolor: 'background.paper', 
+            borderRadius: 1,
+            '& .MuiOutlinedInput-root': {
+              height: { xs: 48, sm: 56 }
+            }
+          }}
         />
       </Box>
 
@@ -179,7 +192,7 @@ const Products: React.FC = () => {
           <CircularProgress />
         </Box>
       ) : (
-        <Grid container spacing={3}>
+        <Grid container spacing={{ xs: 2, sm: 3 }}>
           {filteredProducts.map((product: Product) => (
             <Grid item xs={12} sm={6} md={4} key={product.id}>
               <Fade in={true}>
@@ -220,8 +233,14 @@ const Products: React.FC = () => {
                       }}
                     />
                   </Box>
-                  <CardContent sx={{ flexGrow: 1, pt: 2 }}>
-                    <Typography variant="h6" component="h2" gutterBottom noWrap>
+                  <CardContent sx={{ flexGrow: 1, pt: 2, px: { xs: 2, sm: 3 } }}>
+                    <Typography 
+                      variant="h6" 
+                      component="h2" 
+                      gutterBottom 
+                      noWrap
+                      sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+                    >
                       {product.name}
                     </Typography>
                     <Typography 
@@ -234,45 +253,60 @@ const Products: React.FC = () => {
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
                         height: '4.5em',
+                        fontSize: { xs: '0.875rem', sm: '1rem' }
                       }}
                     >
                       {product.description}
                     </Typography>
                     <Stack spacing={2}>
-                      <Typography variant="h6" color="primary">
+                      <Typography 
+                        variant="h6" 
+                        color="primary"
+                        sx={{ fontSize: { xs: '1.1rem', sm: '1.25rem' } }}
+                      >
                         ${product.price.toFixed(2)}
                       </Typography>
-                      <Box sx={{ display: 'flex', gap: 1 }}>
+                      <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
                         <Chip
                           icon={<InventoryIcon />}
                           label={`Stock: ${product.stock}`}
                           size="small"
                           color={product.stock > 0 ? "success" : "error"}
+                          sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                         />
                         <Chip
                           icon={<CategoryIcon />}
                           label={product.category}
                           size="small"
-                          sx={{ borderRadius: 1 }}
+                          sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
                         />
                       </Box>
                     </Stack>
                   </CardContent>
-                  <CardActions sx={{ justifyContent: 'flex-end', p: 2 }}>
-                    <IconButton 
+                  <CardActions sx={{ px: { xs: 2, sm: 3 }, pb: { xs: 2, sm: 3 } }}>
+                    <Button
+                      size="small"
+                      startIcon={<EditIcon />}
                       onClick={() => handleEditClick(product)}
-                      color="primary"
-                      size="small"
+                      sx={{ 
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        minWidth: { xs: 'auto', sm: 100 }
+                      }}
                     >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton 
-                      onClick={() => handleDelete(product.id)}
+                      Edit
+                    </Button>
+                    <Button
+                      size="small"
                       color="error"
-                      size="small"
+                      startIcon={<DeleteIcon />}
+                      onClick={() => handleDelete(product.id)}
+                      sx={{ 
+                        fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                        minWidth: { xs: 'auto', sm: 100 }
+                      }}
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      Delete
+                    </Button>
                   </CardActions>
                 </Card>
               </Fade>
@@ -287,87 +321,83 @@ const Products: React.FC = () => {
         maxWidth="sm"
         fullWidth
         PaperProps={{
-          sx: { borderRadius: 2 }
+          sx: {
+            borderRadius: 2,
+            p: { xs: 2, sm: 3 }
+          }
         }}
       >
-        <DialogTitle sx={{ pb: 1 }}>
-          <Typography variant="h5" component="div" sx={{ fontWeight: 600 }}>
-            {editProduct ? 'Edit Product' : 'Add New Product'}
-          </Typography>
+        <DialogTitle sx={{ 
+          fontSize: { xs: '1.25rem', sm: '1.5rem' },
+          px: { xs: 2, sm: 3 }
+        }}>
+          {editProduct ? 'Edit Product' : 'Add New Product'}
         </DialogTitle>
-        <DialogContent sx={{ pb: 2 }}>
-          <Box sx={{ mt: 2 }}>
+        <DialogContent sx={{ px: { xs: 2, sm: 3 } }}>
+          <Stack spacing={3} sx={{ mt: 2 }}>
             <TextField
-              margin="dense"
-              label="Name"
-              fullWidth
+              label="Product Name"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              sx={{ mb: 2 }}
+              fullWidth
+              required
             />
             <TextField
-              margin="dense"
               label="Description"
-              fullWidth
-              multiline
-              rows={4}
               value={formData.description}
               onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-              sx={{ mb: 2 }}
+              fullWidth
+              multiline
+              rows={3}
             />
             <TextField
-              margin="dense"
               label="Price"
-              fullWidth
               type="number"
               value={formData.price}
               onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+              fullWidth
+              required
               InputProps={{
                 startAdornment: <InputAdornment position="start">$</InputAdornment>,
               }}
-              sx={{ mb: 2 }}
             />
             <TextField
-              margin="dense"
               label="Stock"
-              fullWidth
               type="number"
               value={formData.stock}
               onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
-              sx={{ mb: 2 }}
+              fullWidth
+              required
             />
             <TextField
-              margin="dense"
               label="Category"
-              fullWidth
               value={formData.category}
               onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+              fullWidth
+              required
             />
             <TextField
-              margin="dense"
               label="Image URL"
-              fullWidth
               value={formData.image}
               onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-              sx={{ mb: 2 }}
+              fullWidth
             />
-          </Box>
+          </Stack>
         </DialogContent>
-        <DialogActions sx={{ p: 3 }}>
-          <Button 
-            onClick={handleClose}
-            variant="outlined"
-            sx={{ borderRadius: 2 }}
-          >
+        <DialogActions sx={{ px: { xs: 2, sm: 3 } }}>
+          <Button onClick={handleClose} sx={{ fontSize: { xs: '0.875rem', sm: '1rem' } }}>
             Cancel
           </Button>
           <Button 
             onClick={handleSubmit} 
             variant="contained" 
             color="primary"
-            sx={{ borderRadius: 2 }}
+            sx={{ 
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              minWidth: { xs: 80, sm: 100 }
+            }}
           >
-            {editProduct ? 'Update' : 'Add'} Product
+            {editProduct ? 'Update' : 'Add'}
           </Button>
         </DialogActions>
       </Dialog>

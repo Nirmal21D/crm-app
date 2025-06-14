@@ -100,12 +100,12 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Typography variant="h4" component="h1" sx={{ mb: 4, fontWeight: 600 }}>
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4, px: { xs: 2, sm: 3 } }}>
+      <Typography variant="h4" component="h1" sx={{ mb: 4, fontWeight: 600, fontSize: { xs: '1.5rem', sm: '2rem' } }}>
         Dashboard Overview
       </Typography>
 
-      <Grid container spacing={3} sx={{ mb: 4 }}>
+      <Grid container spacing={{ xs: 2, sm: 3 }} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={6} md={3}>
           <StatCard
             title="Total Products"
@@ -140,26 +140,26 @@ const Dashboard: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={{ xs: 2, sm: 3 }}>
         <Grid item xs={12} md={8}>
           <Paper
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               display: 'flex',
               flexDirection: 'column',
-              height: 400,
+              height: { xs: 300, sm: 400 },
               borderRadius: 3,
               boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
             }}
           >
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
-              <Typography variant="h6" component="h2" sx={{ fontWeight: 600 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 3, flexWrap: 'wrap', gap: 1 }}>
+              <Typography variant="h6" component="h2" sx={{ fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
                 Products by Category
               </Typography>
               <Chip
                 label={`${chartData.length} Categories`}
                 size="small"
-                sx={{ ml: 2 }}
+                sx={{ ml: { xs: 0, sm: 2 } }}
               />
             </Box>
             <Box sx={{ height: 'calc(100% - 48px)', width: '100%' }}>
@@ -176,11 +176,14 @@ const Dashboard: React.FC = () => {
                   <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                   <XAxis
                     dataKey="category"
-                    tick={{ fill: '#64748b' }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
                     tickLine={{ stroke: '#e2e8f0' }}
+                    angle={-45}
+                    textAnchor="end"
+                    height={60}
                   />
                   <YAxis
-                    tick={{ fill: '#64748b' }}
+                    tick={{ fill: '#64748b', fontSize: 12 }}
                     tickLine={{ stroke: '#e2e8f0' }}
                   />
                   <RechartsTooltip
@@ -189,6 +192,7 @@ const Dashboard: React.FC = () => {
                       border: 'none',
                       borderRadius: 8,
                       boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                      fontSize: 12,
                     }}
                   />
                   <Bar dataKey="count" fill="#2563eb" radius={[4, 4, 0, 0]} />
@@ -200,15 +204,15 @@ const Dashboard: React.FC = () => {
         <Grid item xs={12} md={4}>
           <Paper
             sx={{
-              p: 3,
+              p: { xs: 2, sm: 3 },
               display: 'flex',
               flexDirection: 'column',
-              height: 400,
+              height: { xs: 300, sm: 400 },
               borderRadius: 3,
               boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
             }}
           >
-            <Typography variant="h6" component="h2" sx={{ mb: 3, fontWeight: 600 }}>
+            <Typography variant="h6" component="h2" sx={{ mb: 3, fontWeight: 600, fontSize: { xs: '1rem', sm: '1.25rem' } }}>
               Category Distribution
             </Typography>
             <Box sx={{ height: 'calc(100% - 48px)', width: '100%' }}>
@@ -220,8 +224,8 @@ const Dashboard: React.FC = () => {
                     nameKey="category"
                     cx="50%"
                     cy="50%"
-                    innerRadius={60}
-                    outerRadius={80}
+                    innerRadius={40}
+                    outerRadius={60}
                     paddingAngle={5}
                   >
                     {chartData.map((entry, index) => (
@@ -237,13 +241,14 @@ const Dashboard: React.FC = () => {
                       border: 'none',
                       borderRadius: 8,
                       boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                      fontSize: 12,
                     }}
                   />
                   <Legend
                     verticalAlign="bottom"
                     height={36}
                     formatter={(value) => (
-                      <span style={{ color: '#64748b' }}>{value}</span>
+                      <span style={{ color: '#64748b', fontSize: 12 }}>{value}</span>
                     )}
                   />
                 </PieChart>

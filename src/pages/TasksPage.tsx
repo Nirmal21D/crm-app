@@ -74,34 +74,56 @@ const TasksPage: React.FC = () => {
         <Paper 
           elevation={0}
           sx={{ 
-            p: 2,
+            p: { xs: 1.5, sm: 2 },
             display: 'flex',
+            flexDirection: { xs: 'column', sm: 'row' },
             justifyContent: 'space-between',
-            alignItems: 'center',
+            alignItems: { xs: 'flex-start', sm: 'center' },
             borderRadius: 2,
             border: '1px solid',
             borderColor: 'divider',
+            gap: { xs: 1.5, sm: 2 }
           }}
         >
-          <Typography variant="h4" component="h1" sx={{ fontWeight: 600 }}>
+          <Typography 
+            variant="h4" 
+            component="h1" 
+            sx={{ 
+              fontWeight: 600,
+              fontSize: { xs: '1.5rem', sm: '2.125rem' },
+              mb: { xs: 1, sm: 0 }
+            }}
+          >
             Tasks & Follow-ups
           </Typography>
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ 
+            display: 'flex', 
+            gap: { xs: 1, sm: 2 },
+            flexWrap: 'wrap',
+            width: { xs: '100%', sm: 'auto' }
+          }}>
             <ToggleButtonGroup
               value={view}
               exclusive
               onChange={handleViewChange}
               aria-label="view selector"
               size="small"
+              sx={{
+                '& .MuiToggleButton-root': {
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                  px: { xs: 1, sm: 1.5 },
+                  py: { xs: 0.5, sm: 0.75 }
+                }
+              }}
             >
               <ToggleButton value="grid" aria-label="grid view">
-                <GridViewIcon />
+                <GridViewIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
               </ToggleButton>
               <ToggleButton value="list" aria-label="list view">
-                <ListViewIcon />
+                <ListViewIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
               </ToggleButton>
               <ToggleButton value="calendar" aria-label="calendar view">
-                <CalendarIcon />
+                <CalendarIcon sx={{ fontSize: { xs: 18, sm: 20 } }} />
               </ToggleButton>
             </ToggleButtonGroup>
             <Button
@@ -109,11 +131,14 @@ const TasksPage: React.FC = () => {
               startIcon={<AddIcon />}
               onClick={() => handleNewTask()}
               sx={{
-                px: 3,
+                px: { xs: 2, sm: 3 },
+                py: { xs: 0.75, sm: 1 },
                 boxShadow: 'none',
                 '&:hover': {
                   boxShadow: 'none',
                 },
+                width: { xs: '100%', sm: 'auto' },
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }}
             >
               New Task

@@ -55,13 +55,13 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
   };
 
   return (
-    <Box sx={{ p: 2 }}>
-      <Grid container spacing={2}>
+    <Box sx={{ p: { xs: 1, sm: 2 } }}>
+      <Grid container spacing={{ xs: 1.5, sm: 2 }}>
         {tasks.map((task: Task) => (
           <Grid item xs={12} sm={6} md={4} key={task.id}>
             <Paper
               sx={{
-                p: 2,
+                p: { xs: 1.5, sm: 2 },
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
@@ -77,12 +77,20 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
                 <IconButton
                   size="small"
                   onClick={(e) => handleMenuOpen(e, task)}
+                  sx={{ p: { xs: 0.5, sm: 1 } }}
                 >
-                  <MoreVertIcon />
+                  <MoreVertIcon sx={{ fontSize: { xs: 20, sm: 24 } }} />
                 </IconButton>
               </Box>
 
-              <Typography variant="h6" gutterBottom>
+              <Typography 
+                variant="h6" 
+                gutterBottom
+                sx={{ 
+                  fontSize: { xs: '1rem', sm: '1.25rem' },
+                  pr: 4
+                }}
+              >
                 {task.title}
               </Typography>
 
@@ -96,13 +104,14 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
                   display: '-webkit-box',
                   WebkitLineClamp: 3,
                   WebkitBoxOrient: 'vertical',
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
                 }}
               >
                 {task.description}
               </Typography>
 
               <Box sx={{ mt: 'auto' }}>
-                <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
+                <Box sx={{ display: 'flex', gap: 1, mb: 1, flexWrap: 'wrap' }}>
                   <Chip
                     label={task.priority}
                     size="small"
@@ -110,6 +119,8 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
                       bgcolor: priorityColors[task.priority], 
                       color: 'white',
                       fontWeight: 500,
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      height: { xs: 24, sm: 28 }
                     }}
                   />
                   <Chip
@@ -119,11 +130,17 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
                       bgcolor: statusColors[task.status], 
                       color: 'white',
                       fontWeight: 500,
+                      fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                      height: { xs: 24, sm: 28 }
                     }}
                   />
                 </Box>
 
-                <Typography variant="caption" color="text.secondary">
+                <Typography 
+                  variant="caption" 
+                  color="text.secondary"
+                  sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}
+                >
                   Due: {new Date(task.dueDate).toLocaleDateString()}
                 </Typography>
               </Box>
@@ -136,15 +153,24 @@ export const Tasks: React.FC<TasksProps> = ({ openDialog, onCloseDialog, selecte
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
+        PaperProps={{
+          sx: {
+            mt: 1,
+            '& .MuiMenuItem-root': {
+              fontSize: { xs: '0.875rem', sm: '1rem' },
+              py: { xs: 1, sm: 1.5 }
+            }
+          }
+        }}
       >
         {menuTask && (
           <>
             <MenuItem onClick={() => handleEditClick(menuTask)}>
-              <EditIcon fontSize="small" sx={{ mr: 1 }} />
+              <EditIcon fontSize="small" sx={{ mr: 1, fontSize: { xs: 18, sm: 20 } }} />
               Edit
             </MenuItem>
             <MenuItem onClick={() => handleDeleteClick(menuTask)}>
-              <DeleteIcon fontSize="small" sx={{ mr: 1 }} />
+              <DeleteIcon fontSize="small" sx={{ mr: 1, fontSize: { xs: 18, sm: 20 } }} />
               Delete
             </MenuItem>
           </>

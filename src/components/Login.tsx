@@ -50,13 +50,14 @@ const Login: React.FC = () => {
         display: 'flex',
         alignItems: 'center',
         background: 'linear-gradient(45deg, #2563eb 30%, #7c3aed 90%)',
+        py: { xs: 4, sm: 0 }
       }}
     >
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" sx={{ px: { xs: 2, sm: 3 } }}>
         <Paper
           elevation={0}
           sx={{
-            p: 4,
+            p: { xs: 3, sm: 4 },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -67,8 +68,8 @@ const Login: React.FC = () => {
           <Avatar
             sx={{
               mb: 2,
-              width: 56,
-              height: 56,
+              width: { xs: 48, sm: 56 },
+              height: { xs: 48, sm: 56 },
               bgcolor: 'primary.main',
             }}
           >
@@ -82,6 +83,7 @@ const Login: React.FC = () => {
               mb: 3,
               fontWeight: 700,
               color: 'text.primary',
+              fontSize: { xs: '1.5rem', sm: '2rem' }
             }}
           >
             Welcome Back
@@ -94,6 +96,7 @@ const Login: React.FC = () => {
                 width: '100%',
                 mb: 3,
                 borderRadius: 2,
+                fontSize: { xs: '0.875rem', sm: '1rem' }
               }}
             >
               {error}
@@ -125,7 +128,15 @@ const Login: React.FC = () => {
                   </InputAdornment>
                 ),
               }}
-              sx={{ mb: 2 }}
+              sx={{ 
+                mb: 2,
+                '& .MuiOutlinedInput-root': {
+                  height: { xs: 48, sm: 56 }
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: { xs: '0.875rem', sm: '1rem' }
+                }
+              }}
             />
 
             <TextField
@@ -151,13 +162,22 @@ const Login: React.FC = () => {
                       aria-label="toggle password visibility"
                       onClick={handleTogglePassword}
                       edge="end"
+                      size="small"
                     >
                       {showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
                     </IconButton>
                   </InputAdornment>
                 ),
               }}
-              sx={{ mb: 3 }}
+              sx={{ 
+                mb: 3,
+                '& .MuiOutlinedInput-root': {
+                  height: { xs: 48, sm: 56 }
+                },
+                '& .MuiInputLabel-root': {
+                  fontSize: { xs: '0.875rem', sm: '1rem' }
+                }
+              }}
             />
 
             <Button
@@ -166,9 +186,10 @@ const Login: React.FC = () => {
               variant="contained"
               disabled={loading}
               sx={{
-                py: 1.5,
-                fontSize: '1rem',
+                py: { xs: 1.25, sm: 1.5 },
+                fontSize: { xs: '0.875rem', sm: '1rem' },
                 position: 'relative',
+                height: { xs: 48, sm: 56 }
               }}
             >
               {loading ? (

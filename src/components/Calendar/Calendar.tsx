@@ -106,13 +106,32 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+    <Box sx={{ p: { xs: 1, sm: 2, md: 3 } }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', sm: 'row' },
+        justifyContent: 'space-between', 
+        alignItems: { xs: 'stretch', sm: 'center' }, 
+        gap: { xs: 1, sm: 2 },
+        mb: { xs: 2, sm: 3 } 
+      }}>
+        <Box sx={{ 
+          display: 'flex', 
+          alignItems: 'center', 
+          gap: 1,
+          justifyContent: { xs: 'space-between', sm: 'flex-start' }
+        }}>
           <IconButton onClick={handlePreviousMonth} size="small">
             <ChevronLeftIcon />
           </IconButton>
-          <Typography variant="h6" sx={{ minWidth: 200, textAlign: 'center' }}>
+          <Typography 
+            variant="h6" 
+            sx={{ 
+              minWidth: { xs: 150, sm: 200 }, 
+              textAlign: 'center',
+              fontSize: { xs: '1.1rem', sm: '1.25rem' }
+            }}
+          >
             {format(currentDate, 'MMMM yyyy')}
           </Typography>
           <IconButton onClick={handleNextMonth} size="small">
@@ -124,6 +143,10 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
           onClick={handleToday}
           variant="outlined"
           size="small"
+          sx={{ 
+            width: { xs: '100%', sm: 'auto' },
+            fontSize: { xs: '0.875rem', sm: '1rem' }
+          }}
         >
           Today
         </Button>
@@ -134,20 +157,20 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
         {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day) => (
           <Grid item xs key={day}>
             <Box sx={{ 
-              height: 40,
+              height: { xs: 32, sm: 40 },
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               bgcolor: theme.palette.background.paper,
               borderRadius: '4px 4px 0 0',
-              mx: 0.5,
+              mx: { xs: 0.25, sm: 0.5 },
               boxShadow: 1
             }}>
               <Typography 
                 sx={{ 
                   fontWeight: 600,
                   color: day === 'Sunday' ? 'error.main' : 'text.primary',
-                  fontSize: '0.875rem'
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
                 }}
               >
                 {day.slice(0, 3)}
@@ -169,7 +192,7 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
           borderBottom: 1, 
           borderRight: 1, 
           borderColor: 'divider',
-          aspectRatio: '1',
+          aspectRatio: { xs: '1.4 / 1', sm: '1.2 / 1', md: '1 / 1' },
           p: 0,
           width: '100%',
           maxWidth: '100%',
@@ -195,23 +218,24 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
             >
               <Box 
                 sx={{ 
-                  p: 1,
+                  p: { xs: 0.2, sm: 0.4, md: 1 },
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: 0.5
+                  gap: { xs: 0.1, sm: 0.2, md: 0.5 }
                 }}
               >
                 <Box sx={{ 
                   display: 'flex', 
                   justifyContent: 'space-between', 
                   alignItems: 'center',
-                  height: 28
+                  height: { xs: 18, sm: 22, md: 28 }
                 }}>
                   <Typography 
                     sx={{ 
                       fontWeight: isToday ? 600 : 400,
-                      color: hasHighPriority ? 'error.main' : 'inherit'
+                      color: hasHighPriority ? 'error.main' : 'inherit',
+                      fontSize: { xs: '0.7rem', sm: '0.8rem', md: '1rem' }
                     }}
                   >
                     {format(date, 'd')}
@@ -224,16 +248,16 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
                         opacity: 0, 
                         transition: '0.2s', 
                         '&:hover': { opacity: 1 },
-                        p: 0.5
+                        p: { xs: 0, sm: 0.25, md: 0.5 }
                       }}
                     >
-                      <EventIcon fontSize="small" />
+                      <EventIcon sx={{ fontSize: { xs: 12, sm: 14, md: 20 } }} />
                     </IconButton>
                   )}
                 </Box>
 
                 <Stack 
-                  spacing={0.5} 
+                  spacing={{ xs: 0.1, sm: 0.2, md: 0.5 }} 
                   sx={{ 
                     overflow: 'auto',
                     flex: 1,
@@ -253,16 +277,17 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
                         size="small"
                         onClick={() => handleTaskClick(task)}
                         sx={{
-                          maxWidth: '100%',
-                          height: 24,
-                          backgroundColor: alpha(priorityColors[task.priority], 0.1),
-                          borderLeft: 3,
-                          borderColor: priorityColors[task.priority],
+                          width: '100%',
+                          justifyContent: 'flex-start',
+                          bgcolor: priorityColors[task.priority],
+                          color: 'white',
+                          fontSize: { xs: '0.6rem', sm: '0.7rem', md: '0.875rem' },
+                          height: { xs: 18, sm: 22, md: 28 },
                           '& .MuiChip-label': {
-                            fontSize: '0.75rem',
+                            overflow: 'hidden',
                             textOverflow: 'ellipsis',
                             whiteSpace: 'nowrap',
-                            overflow: 'hidden'
+                            px: { xs: 0.4, sm: 0.8, md: 1 }
                           }
                         }}
                       />
@@ -276,9 +301,9 @@ export const Calendar: React.FC<CalendarProps> = ({ onTaskClick, onAddTask }) =>
       </Grid>
 
       <TaskDetails
+        task={selectedTask}
         open={detailsOpen}
         onClose={handleCloseDetails}
-        task={selectedTask}
       />
     </Box>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {
@@ -11,6 +11,16 @@ import {
   IconButton,
   Avatar,
   Tooltip,
+  Menu,
+  MenuItem,
+  useTheme,
+  useMediaQuery,
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Divider,
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
@@ -18,6 +28,7 @@ import {
   Analytics as AnalyticsIcon,
   Assignment as TasksIcon,
   Logout as LogoutIcon,
+  Menu as MenuIcon,
 } from '@mui/icons-material';
 import { logout } from '../store/slices/authSlice';
 import { AppDispatch } from '../store';
@@ -26,6 +37,9 @@ const Navigation: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch<AppDispatch>();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     dispatch(logout());
@@ -56,6 +70,15 @@ const Navigation: React.FC = () => {
       icon: <InventoryIcon />,
     },
   ];
+
+  const handleMobileMenuToggle = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <AppBar 
@@ -95,49 +118,117 @@ const Navigation: React.FC = () => {
             CRM Dashboard
           </Typography>
           
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                onClick={() => navigate(item.path)}
-                startIcon={item.icon}
-                sx={{
-                  minWidth: 100,
-                  color: isActive(item.path) ? 'primary.main' : 'text.secondary',
-                  backgroundColor: isActive(item.path) ? 'primary.light' : 'transparent',
-                  '&:hover': {
-                    backgroundColor: isActive(item.path) 
-                      ? 'primary.light' 
-                      : 'action.hover',
-                  },
-                  fontWeight: isActive(item.path) ? 600 : 500,
-                  textTransform: 'none',
-                  borderRadius: 2,
-                  py: 1,
-                }}
+          {!isMobile ? (
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              {navItems.map((item) => (
+                <Button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  startIcon={item.icon}
+                  sx={{
+                    minWidth: 100,
+                    color: isActive(item.path) ? 'primary.main' : 'text.secondary',
+                    backgroundColor: isActive(item.path) ? 'primary.light' : 'transparent',
+                    '&:hover': {
+                      backgroundColor: isActive(item.path) 
+                        ? 'primary.light' 
+                        : 'action.hover',
+                    },
+                    fontWeight: isActive(item.path) ? 600 : 500,
+                    textTransform: 'none',
+                    borderRadius: 2,
+                    py: 1,
+                  }}
+                >
+                  {item.label}
+                </Button>
+              ))}
+              
+              <Tooltip title="Logout">
+                <IconButton 
+                  onClick={handleLogout}
+                  sx={{ 
+                    ml: 2,
+                    color: 'text.secondary',
+                    '&:hover': {
+                      backgroundColor: 'error.light',
+                      color: 'error.main',
+                    },
+                  }}
+                >
+                  <LogoutIcon />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          ) : (
+            <Box>
+              <IconButton
+                edge="end"
+                color="inherit"
+                aria-label="menu"
+                onClick={handleMobileMenuToggle}
+                sx={{ color: 'text.secondary' }}
               >
-                {item.label}
-              </Button>
-            ))}
-            
-            <Tooltip title="Logout">
-              <IconButton 
-                onClick={handleLogout}
-                sx={{ 
-                  ml: 2,
-                  color: 'text.secondary',
-                  '&:hover': {
-                    backgroundColor: 'error.light',
-                    color: 'error.main',
-                  },
-                }}
-              >
-                <LogoutIcon />
+                <MenuIcon />
               </IconButton>
-            </Tooltip>
-          </Box>
+            </Box>
+          )}
         </Toolbar>
       </Container>
+
+      {/* Mobile Menu Drawer */}
+      <Drawer
+        anchor="right"
+        open={mobileMenuOpen}
+        onClose={handleMobileMenuToggle}
+        PaperProps={{
+          sx: {
+            width: 280,
+            pt: 2,
+          },
+        }}
+      >
+        <List>
+          {navItems.map((item) => (
+            <ListItem
+              button
+              key={item.path}
+              onClick={() => handleNavigation(item.path)}
+              selected={isActive(item.path)}
+              sx={{
+                color: isActive(item.path) ? 'primary.main' : 'text.primary',
+                '&.Mui-selected': {
+                  backgroundColor: 'primary.light',
+                  '&:hover': {
+                    backgroundColor: 'primary.light',
+                  },
+                },
+              }}
+            >
+              <ListItemIcon sx={{ color: 'inherit' }}>
+                {item.icon}
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+            </ListItem>
+          ))}
+          <Divider sx={{ my: 1 }} />
+          <ListItem
+            button
+            onClick={handleLogout}
+            sx={{
+              color: 'error.main',
+              '&:hover': {
+                backgroundColor: 'error.light',
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: 'inherit' }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText primary="Logout" />
+          </ListItem>
+        </List>
+      </Drawer>
     </AppBar>
   );
 };

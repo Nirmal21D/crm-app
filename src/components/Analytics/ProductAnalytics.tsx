@@ -60,92 +60,147 @@ const categoryPerformance = [
 
 const ProductAnalytics: React.FC = () => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={{ xs: 1.5, sm: 3 }}>
       <Grid item xs={12}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" gutterBottom>
+        <Paper sx={{ p: { xs: 1.5, sm: 3 } }}>
+          <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
             Product Performance
           </Typography>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Product</TableCell>
-                  <TableCell>Category</TableCell>
-                  <TableCell align="right">Sales</TableCell>
-                  <TableCell align="right">Units Sold</TableCell>
-                  <TableCell align="right">Conversion Rate</TableCell>
-                  <TableCell align="right">Trend</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {productPerformance.map((product) => (
-                  <TableRow key={product.id} hover>
-                    <TableCell>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Avatar src={product.thumbnail} variant="rounded" />
-                        <Typography variant="body2">{product.name}</Typography>
-                      </Box>
-                    </TableCell>
-                    <TableCell>
-                      <Chip
-                        label={product.category}
-                        size="small"
-                        variant="outlined"
-                      />
-                    </TableCell>
-                    <TableCell align="right">
-                      ${product.sales.toLocaleString()}
-                    </TableCell>
-                    <TableCell align="right">{product.units}</TableCell>
-                    <TableCell align="right">
-                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
-                        <LinearProgress
-                          variant="determinate"
-                          value={product.conversion * 10}
-                          sx={{ width: 100, mr: 1 }}
-                        />
-                        {product.conversion}%
-                      </Box>
-                    </TableCell>
-                    <TableCell align="right">
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'flex-end',
-                          color: product.trend > 0 ? 'success.main' : 'error.main',
-                        }}
-                      >
-                        {product.trend > 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
-                        {Math.abs(product.trend)}%
-                      </Box>
-                    </TableCell>
+          <Box sx={{ overflowX: 'auto', mx: { xs: -1.5, sm: -3 } }}>
+            <TableContainer>
+              <Table size="small">
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ 
+                      minWidth: { xs: 120, sm: 200 },
+                      pl: { xs: 1.5, sm: 3 }
+                    }}>Product</TableCell>
+                    <TableCell sx={{ minWidth: { xs: 80, sm: 120 } }}>Category</TableCell>
+                    <TableCell align="right" sx={{ minWidth: { xs: 70, sm: 100 } }}>Sales</TableCell>
+                    <TableCell align="right" sx={{ minWidth: { xs: 70, sm: 100 } }}>Units</TableCell>
+                    <TableCell align="right" sx={{ minWidth: { xs: 90, sm: 150 } }}>Conversion</TableCell>
+                    <TableCell align="right" sx={{ 
+                      minWidth: { xs: 70, sm: 100 },
+                      pr: { xs: 1.5, sm: 3 }
+                    }}>Trend</TableCell>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableHead>
+                <TableBody>
+                  {productPerformance.map((product) => (
+                    <TableRow key={product.id} hover>
+                      <TableCell sx={{ pl: { xs: 1.5, sm: 3 } }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <Avatar 
+                            src={product.thumbnail} 
+                            variant="rounded"
+                            sx={{ 
+                              width: { xs: 28, sm: 40 }, 
+                              height: { xs: 28, sm: 40 },
+                              display: { xs: 'none', sm: 'flex' }
+                            }}
+                          />
+                          <Typography 
+                            variant="body2"
+                            sx={{ 
+                              fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                              maxWidth: { xs: 120, sm: 200 },
+                              overflow: 'hidden',
+                              textOverflow: 'ellipsis',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            {product.name}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>
+                        <Chip
+                          label={product.category}
+                          size="small"
+                          variant="outlined"
+                          sx={{ 
+                            fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                            height: { xs: 24, sm: 28 }
+                          }}
+                        />
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                        ${product.sales.toLocaleString()}
+                      </TableCell>
+                      <TableCell align="right" sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                        {product.units}
+                      </TableCell>
+                      <TableCell align="right">
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end' }}>
+                          <LinearProgress
+                            variant="determinate"
+                            value={product.conversion * 10}
+                            sx={{ 
+                              width: { xs: 50, sm: 100 }, 
+                              mr: 1,
+                              height: { xs: 4, sm: 6 }
+                            }}
+                          />
+                          <Typography sx={{ fontSize: { xs: '0.75rem', sm: '0.875rem' } }}>
+                            {product.conversion}%
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="right" sx={{ pr: { xs: 1.5, sm: 3 } }}>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'flex-end',
+                            color: product.trend > 0 ? 'success.main' : 'error.main',
+                            fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                          }}
+                        >
+                          {product.trend > 0 ? <TrendingUpIcon sx={{ fontSize: { xs: 16, sm: 20 } }} /> : <TrendingDownIcon sx={{ fontSize: { xs: 16, sm: 20 } }} />}
+                          {Math.abs(product.trend)}%
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Paper>
       </Grid>
 
       <Grid item xs={12}>
-        <Paper sx={{ p: 3 }}>
-          <Typography variant="h6" gutterBottom>
+        <Paper sx={{ p: { xs: 1.5, sm: 3 } }}>
+          <Typography variant="h6" gutterBottom sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}>
             Category Performance
           </Typography>
-          <Box sx={{ height: 400 }}>
+          <Box sx={{ 
+            height: { xs: 250, sm: 400 },
+            mx: { xs: -1.5, sm: -3 },
+            px: { xs: 1.5, sm: 3 }
+          }}>
             <ResponsiveContainer>
               <BarChart data={categoryPerformance}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
                 <XAxis
                   dataKey="name"
-                  tick={{ fill: '#64748b' }}
+                  tick={{ 
+                    fill: '#64748b', 
+                    fontSize: 12
+                  }}
                   tickLine={{ stroke: '#e2e8f0' }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
                 />
                 <YAxis
-                  tick={{ fill: '#64748b' }}
+                  tick={{ 
+                    fill: '#64748b', 
+                    fontSize: 12
+                  }}
                   tickLine={{ stroke: '#e2e8f0' }}
+                  width={40}
                 />
                 <Tooltip
                   contentStyle={{
@@ -153,9 +208,15 @@ const ProductAnalytics: React.FC = () => {
                     border: 'none',
                     borderRadius: 8,
                     boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+                    fontSize: 12
                   }}
                 />
-                <Legend />
+                <Legend 
+                  wrapperStyle={{
+                    fontSize: 12,
+                    paddingTop: 20
+                  }}
+                />
                 <Bar
                   dataKey="value"
                   fill="#2563eb"
