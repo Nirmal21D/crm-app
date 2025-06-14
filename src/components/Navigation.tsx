@@ -29,6 +29,7 @@ import {
   Assignment as TasksIcon,
   Logout as LogoutIcon,
   Menu as MenuIcon,
+  Description as DescriptionIcon,
 } from '@mui/icons-material';
 import { logout } from '../store/slices/authSlice';
 import { AppDispatch } from '../store';
@@ -68,6 +69,11 @@ const Navigation: React.FC = () => {
       label: 'Products',
       path: '/products',
       icon: <InventoryIcon />,
+    },
+    {
+      label: 'PDF Editor',
+      path: '/pdf-editor',
+      icon: <DescriptionIcon />,
     },
   ];
 

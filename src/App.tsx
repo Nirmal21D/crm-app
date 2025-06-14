@@ -7,6 +7,7 @@ import Dashboard from './components/Dashboard';
 import Products from './components/Products';
 import Analytics from './components/Analytics';
 import TasksPage from './pages/TasksPage';
+import PdfEditorPage from './pages/PdfEditorPage';
 import Navigation from './components/Navigation';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -157,6 +158,14 @@ const AppContent: React.FC = () => {
           element={
             <ProtectedRoute>
               <Products />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pdf-editor"
+          element={
+            <ProtectedRoute>
+              <PdfEditorPage />
             </ProtectedRoute>
           }
         />
